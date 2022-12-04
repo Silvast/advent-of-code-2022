@@ -3,8 +3,6 @@
 (def rucksack (clojure.string/split-lines
                (slurp "resources/rucksack.txt")))
 
-(def first-rucksack (first rucksack))
-
 (defn split-to-two [s]
   (let [half (/ (.length s) 2)
         first-half (subs s 0 half)
@@ -14,8 +12,7 @@
 
 (def pairs (map #(split-to-two %) rucksack))
 
-;; {:a 1 ... :z 26}
-;; {:A 27 ... :Z 52}
+pairs
 
 (def lowercase-prio
   (let [keywords
@@ -25,8 +22,7 @@
 (def uppercase-prio
   (let [keywords
         (map #(keyword (clojure.string/upper-case (str %)))
-             (map char (range 97 123)))
-        prios {}]
+             (map char (range 97 123)))]
     (zipmap keywords (range 27 53))))
 
 (defn is-uppercase? [s]
@@ -38,20 +34,12 @@
     (lowercase-prio (keyword s))))
 
 
-;;Find the item type that appears in both compartments of each rucksack.
-
 (defn find-matching-chars [s1 s2]
   (distinct (filter (into #{} s1) s2)))
 
-(def comp1 (first (first pairs)))
-(def comp2 (second (first pairs)))
-
 (def matching-chars (map #(find-matching-chars (first %) (second %)) pairs))
 
-(first (first matching-chars))
-
 (apply + (map #(get-priority (str (first %))) matching-chars))
-
 
 ;;;;;;;; part 2
 
@@ -67,7 +55,5 @@
   (map #(find-matching-chars2 (first %) (second %) (nth % 2))
        groups-of-three))
 
-new-matching-chars
 
-(first new-matching-chars)
 (apply + (map #(get-priority (str (first %))) new-matching-chars))
