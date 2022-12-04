@@ -12,8 +12,6 @@
 
 (def pairs (map #(split-to-two %) rucksack))
 
-pairs
-
 (def lowercase-prio
   (let [keywords
         (map #(keyword (str %))  (map char (range 97 123)))]
@@ -39,6 +37,7 @@ pairs
 
 (def matching-chars (map #(find-matching-chars (first %) (second %)) pairs))
 
+;;Answer
 (apply + (map #(get-priority (str (first %))) matching-chars))
 
 ;;;;;;;; part 2
@@ -55,5 +54,5 @@ pairs
   (map #(find-matching-chars2 (first %) (second %) (nth % 2))
        groups-of-three))
 
-
+;;Answer
 (apply + (map #(get-priority (str (first %))) new-matching-chars))

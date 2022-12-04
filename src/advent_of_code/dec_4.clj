@@ -23,7 +23,10 @@
 (defn get-contains [data]
   (map #(fully-contains? %) data))
 
+;;Answer
 (count (filter true? (get-contains cleanup)))
+
+;;part 2
 
 (defn partly-overlap? [pair]
   (let [splitted-pair (clojure.string/split pair #",")
@@ -39,4 +42,5 @@
 (defn partly-contains [data]
   (map #(partly-overlap? %) data))
 
+;;Answer
 (count (filter true? (partly-contains cleanup)))

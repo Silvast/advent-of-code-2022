@@ -24,9 +24,6 @@
      (reduce +))
 
 ;; december 2nd
-(def guide (slurp "resources/rock.txt"))
-
-(first guide)
 
 (def guide (->> (slurp "resources/rock.txt")
                 (clojure.string/split-lines)
@@ -48,13 +45,18 @@
   (+ (get-shape j) (get-score i j)))
 
 (defn find-outcome []
-  (let [guide (->> (slurp "src/advent_of_code/rock.txt")
+  (let [guide (->> (slurp "resources/rock.txt")
                    (clojure.string/split-lines)
                    (map #(clojure.string/replace % #"\s" "")))
         letters {:A 0 :B 1 :C 2 :X 0 :Y 1 :Z 2}]
     (apply + (map #(get-outcome
                     (letters (keyword (str (first %))))
                     (letters (keyword (str (second %))))) guide))))
+
+;;Answer
+(find-outcome)
+
+;;Part 2
 
 (defn get-new-score [i j]
   (let [score-matrix  [[3 4 8] [1 5 9] [2 6 7]]]
@@ -71,3 +73,6 @@
     (apply + (map #(get-new-score
                     (letters (keyword (str (first %))))
                     (letters (keyword (str (second %))))) guide))))
+
+;;Answer
+(find-new-outcome)
